@@ -17,7 +17,7 @@ class MusicAlbumList extends StatelessWidget {
   Widget buildMusicAlbum(MusicAlbumModel musicAlbumModel) {
     return Column(
       children: [
-        MusicAlbum.network(musicAlbumModel.url),
+        Image.network(musicAlbumModel.url),
         // Padding(
         //   padding: const EdgeInsets.only(top: 12),
         //   child: Text(musicAlbumModel.title),
