@@ -55,6 +55,23 @@ class AppState extends State<App> {
   }
 }
 
+Widget buildClickmeButton(BuildContext context) {
+  return Container(
+    width: 8,
+    child: ElevatedButton(
+      child: Text("Click me"),
+      onPressed: () => url("https://www.amazon.com/Taylor-Swift/dp/B0014I4KH6");
+    ),
+    );
+  );
+}
+
+url(String s, {https, ButtonStyle}) {
+  style: ElevatedButton.styleFrom(
+    primary: Colors.green,
+    padding: const EdgeInsets.all(12),
+  );
+}
 
 
 

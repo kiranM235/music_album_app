@@ -8,7 +8,7 @@ class MusicAlbumModel {
 
   MusicAlbumModel(this.title, this.artist, this.image, this.thumbnail, this.url);
 
-  MusicAlbumModel.fromJson(Map<dynamic, dynamic> mapData) {
+  MusicAlbumModel.fromJson(Map<String, dynamic> mapData) {
     title = mapData["title"];
     artist = mapData["artist"];
     image = mapData["image"];
