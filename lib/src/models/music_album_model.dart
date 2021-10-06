@@ -1,18 +1,19 @@
-class MusicAlbumModel {
+class AlbumModel {
   late String title;
-  late String artist;
+  late String url;
+  late int id;
   late String image;
   late String thumbnail;
-  late String url;
+  late String artist;
 
+  AlbumModel(this.title, this.url, this.id, this.image, this.thumbnail);
 
-  MusicAlbumModel(this.title, this.artist, this.image, this.thumbnail, this.url);
-
-  MusicAlbumModel.fromJson(Map<String, dynamic> mapData) {
+  AlbumModel.fromJson(Map<String, dynamic> mapData) {
     title = mapData["title"];
-    artist = mapData["artist"];
+    id = mapData["id"];
+    url = mapData["url"];
     image = mapData["image"];
     thumbnail = mapData["thumbnail"];
-    url = mapData["url"];
+    artist = mapData["artist"];
   }
 }

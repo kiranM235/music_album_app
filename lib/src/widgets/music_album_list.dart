@@ -1,33 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:music_albums/src/models/music_album_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class MusicAlbumList extends StatelessWidget {
-  final List<MusicAlbumModel> musicAlbumList;
-  const MusicAlbumList(this.musicAlbumList, {Key? key}) : super(key: key);
+
+class AlbumList extends StatelessWidget {
+  final List<AlbumModel> albumList;
+
+  AlbumList(this.albumList);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (BuildContext context, int index){
-        return buildMusicAlbum(musicAlbumList[index]);
+      itemBuilder: (BuildContext context, int index) {
+        return buildAlbum(albumList[index]);
       },
-      itemCount: musicAlbumList.length,
+      itemCount: albumList.length,
     );
   }
-  Widget buildMusicAlbum(MusicAlbumModel musicAlbumModel) {
-    return Column(
-      children: [
-        Image.network(musicAlbumModel.url),
-        // Padding(
-        //   padding: const EdgeInsets.only(top: 12),
-        //   child: Text(musicAlbumModel.title),
-        // )
-      ],
+
+  Widget buildAlbum(AlbumModel albumModel) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Image.network(albumModel.image, width: 50, height: 50,),
+                SizedBox(width: 20,),
+                Column(
+                  children: [
+                    Title(color: Colors.green, child: Text(albumModel.title)),
+                    SizedBox(height: 5,),
+                    Title(color: Colors.green, child: Text(albumModel.artist)),
+                  ],
+                )
+              ],
+            ), SizedBox(height: 20),
+            Image.network(albumModel.thumbnail),
+            SizedBox(height: 5),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                child: Column(
+                  children: [
+                    Text("Buy Now"),
+                  ],
+                ),
+                onPressed: _launchURL,
+              ),
+            ),
+          ],
+
+        ),
+      ),
     );
   }
-}
 
-class MusicAlbum {
-  static network(String url) {}
 
+  _launchURL() async {
+    const url = "https://places-2021-broadway.herokuapp.com/api/albums/albumModel.url";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

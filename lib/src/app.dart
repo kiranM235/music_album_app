@@ -1,18 +1,11 @@
 import 'dart:convert';
-
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' show get;
-
 import 'package:music_albums/src/models/music_album_model.dart';
 import 'package:music_albums/src/widgets/music_album_list.dart';
 
 
 class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
-
-
-  @override
   AppState createState() {
     return AppState();
   }
@@ -20,65 +13,40 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   int counter = 0;
-  List<MusicAlbumModel> musicAlbumList = [];
-  @override
+  List<AlbumModel> albumList = [];
+
+
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Albums"),
-          centerTitle: true,
+      title: "Music Albums",
+      debugShowCheckedModeBanner: false,
+      home: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Albums"),
+            centerTitle: true,
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: fetchAlbums,
+
+            child: Icon(Icons.add),
+          ),
+          body: AlbumList(albumList),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            fetchMusicAlbums();
-          },
-          child: const Icon(Icons.add),
-        ),
-        body: MusicAlbumList(musicAlbumList),
       ),
     );
   }
-
-  Future<void> fetchMusicAlbums() async {
+  void fetchAlbums() async {
     counter ++;
     var url = Uri.parse("https://places-2021-broadway.herokuapp.com/api/albums/$counter");
     var response = await get(url);
 
-    var body = jsonDecode(response.body);
+    Map<String,dynamic> body = jsonDecode(response.body);
 
-    var musicAlbumModel = MusicAlbumModel.fromJson(body);
+    var albumModel = AlbumModel.fromJson(body);
 
     setState(() {
-      musicAlbumList.add(musicAlbumModel);
+      albumList.add(albumModel);
     });
   }
 }
-
-Widget buildClickmeButton(BuildContext context) {
-  return Container(
-    width: 8,
-    child: ElevatedButton(
-      child: Text("Click me"),
-      onPressed: () => url("https://www.amazon.com/Taylor-Swift/dp/B0014I4KH6");
-    ),
-    );
-  );
-}
-
-url(String s, {https, ButtonStyle}) {
-  style: ElevatedButton.styleFrom(
-    primary: Colors.green,
-    padding: const EdgeInsets.all(12),
-  );
-}
-
-
-
-
-
-
-
-
-
-

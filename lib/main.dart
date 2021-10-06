@@ -12,5 +12,5 @@ void main() {
 
 
   ///  show that text element on screen
-  runApp(const App());
+  runApp(App());
 }
