@@ -26,11 +26,11 @@ class AlbumList extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.network(albumModel.image, width: 50, height: 50,),
+                Image.network(albumModel.image, width: 40, height: 40,),
                 SizedBox(width: 20,),
                 Column(
                   children: [
-                    Title(color: Colors.green, child: Text(albumModel.title)),
+                    Title(color: Colors.green, child: Text(albumModel.title, style: TextStyle(fontWeight: FontWeight.bold),)),
                     SizedBox(height: 5,),
                     Title(color: Colors.green, child: Text(albumModel.artist)),
                   ],
@@ -47,7 +47,9 @@ class AlbumList extends StatelessWidget {
                     Text("Buy Now"),
                   ],
                 ),
-                onPressed: _launchURL,
+                onPressed: (){
+                  _launchURL(albumModel);
+                },
               ),
             ),
           ],
@@ -58,8 +60,8 @@ class AlbumList extends StatelessWidget {
   }
 
 
-  _launchURL() async {
-    const url = "https://places-2021-broadway.herokuapp.com/api/albums/albumModel.url";
+  _launchURL(AlbumModel albumModel) async {
+    final url = albumModel.url;
     if (await canLaunch(url)) {
       await launch(url);
     } else {
